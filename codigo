@@ -1,0 +1,52 @@
+#include <LiquidCrystal.h>
+
+int sensorTemp = A0;
+LiquidCrystal lcd(11, 10, 5, 4, 3, 2);
+
+void setup()
+{
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+  lcd.begin(16,2);
+}
+
+void loop()
+{
+  
+  int pinDoze = 12;
+  int pinTreze = 13;
+  int readingTemp = analogRead(sensorTemp);
+  int teste = 10;
+  
+  float volt = readingTemp * 4.68;
+  volt = volt/1024.0;
+  float temp = (volt - 0.5)*100;
+  
+  String temperatura = String(temp);
+  
+  lcd.clear();
+  lcd.setCursor(0,1);
+  lcd.print(temperatura);
+  
+  
+  if(temp>= 100){
+    leds(pinDoze);
+  }else{
+    
+    leds(pinTreze);
+    
+  }
+  
+  
+  
+}
+
+void leds(int pin){
+  digitalWrite(pin,HIGH);
+  delay(1000);
+  
+  digitalWrite(pin,LOW);
+  delay(1000);
+  	
+}
